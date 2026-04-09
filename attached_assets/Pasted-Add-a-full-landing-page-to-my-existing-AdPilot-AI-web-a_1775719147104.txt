@@ -1,0 +1,134 @@
+Add a full landing page to my existing AdPilot AI web app.
+
+Important:
+- Keep the current dark theme with orange accents
+- Keep the existing dashboard/app intact
+- The landing page should feel premium, modern, and clean
+- The design should match the current app styling
+- Make it responsive for desktop and mobile
+- Add a clear CTA button that takes users into the main app/dashboard
+
+Landing page content and structure:
+
+1. Hero Section
+Headline:
+"Create Better Ads and Market Your Product Without Any Marketing Experience"
+
+Subheadline:
+"AdPilot AI helps small businesses and solo entrepreneurs turn their business or product details into clear marketing recommendations, audience suggestions, ad copy ideas, platform guidance, and a step-by-step action plan."
+
+Buttons:
+- "Generate My Marketing Plan"
+- "See How It Works"
+
+2. Problem Section
+Heading:
+"Marketing your business should not feel confusing"
+
+Text:
+"Most small business owners know they need visibility, but they do not know where to start. AdPilot AI simplifies the process by turning your business details into a practical marketing plan you can actually follow."
+
+3. How It Works Section
+Heading:
+"How It Works"
+
+Step 1 Title:
+"Enter Your Business Details"
+Step 1 Text:
+"Add your business name, product or service, short description, target location, budget, and main goal."
+
+Step 2 Title:
+"Get AI-Powered Recommendations"
+Step 2 Text:
+"AdPilot AI analyzes your input and gives you tailored suggestions on who to target, where to market, what to say, and how to spend your budget."
+
+Step 3 Title:
+"Follow the Step-by-Step Plan"
+Step 3 Text:
+"Get a practical action plan you can use immediately to launch and improve your marketing with more confidence."
+
+4. Features Section
+Heading:
+"What AdPilot AI Helps You Do"
+
+Feature 1:
+Title: "Target the Right Audience"
+Text: "Get suggested audience types based on your product, business type, and location."
+
+Feature 2:
+Title: "Know the Best Platforms"
+Text: "Find out whether your business should focus on Facebook, Instagram, TikTok, Google Ads, or a mix of platforms."
+
+Feature 3:
+Title: "Get Ad Copy Suggestions"
+Text: "Receive ready-to-use messaging ideas and ad angles tailored to your offer."
+
+Feature 4:
+Title: "Use Your Budget Better"
+Text: "See practical budget guidance so you can avoid wasting money on the wrong channels."
+
+Feature 5:
+Title: "Follow a Clear Marketing Strategy"
+Text: "Get a summary of the best approach for your business, not generic advice."
+
+Feature 6:
+Title: "Take Action Step by Step"
+Text: "AdPilot AI breaks things down into simple steps so you know what to do next."
+
+5. Who It’s For Section
+Heading:
+"Built For"
+
+Items:
+- Small business owners
+- Solo entrepreneurs
+- Online vendors
+- Local service providers
+- Startups testing new offers
+- Anyone who wants to market a business without marketing experience
+
+6. Benefits Section
+Heading:
+"Why Use AdPilot AI"
+
+Items:
+- No marketing background needed
+- Simple and easy to use
+- Clear recommendations, not confusing jargon
+- Helps you market with more confidence
+- Saves time on planning
+- Gives structure to your advertising decisions
+
+7. Mid-page CTA Section
+Heading:
+"Stop guessing how to market your business"
+
+Text:
+"Let AdPilot AI help you create a smarter plan in minutes."
+
+Button:
+"Try AdPilot AI"
+
+8. Final CTA Section
+Heading:
+"Create better ads. Reach the right people. Market with confidence."
+
+Text:
+"AdPilot AI gives you the guidance you need to promote your business step by step."
+
+Buttons:
+- "Start Free"
+- "Generate My First Campaign"
+
+Functional requirements:
+- Add a top navigation bar on the landing page
+- Include logo/name: AdPilot AI
+- Include nav links that scroll to sections: How It Works, Features, Benefits
+- Include a CTA button in the nav bar
+- The main CTA buttons should route users to the dashboard/main app page
+- Use modern section spacing, clear typography, and subtle hover effects
+- Use cards, borders, and soft orange glow effects where appropriate
+- Keep the page professional and not cluttered
+- Make the landing page feel like a real startup SaaS homepage
+
+Please implement the landing page fully and connect the CTA buttons to the existing app/dashboard route.

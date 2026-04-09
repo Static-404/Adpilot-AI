@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Sparkles, LayoutDashboard, Bookmark, ChevronRight, Zap } from "lucide-react";
+import { useLocation } from "wouter";
+import { Sparkles, LayoutDashboard, Bookmark, ChevronRight, Zap, ArrowLeft } from "lucide-react";
 import { CampaignForm } from "@/components/CampaignForm";
 import { ResultsPanel } from "@/components/ResultsPanel";
 import { SavedCampaigns } from "@/components/SavedCampaigns";
@@ -18,6 +19,7 @@ const stats = [
 ];
 
 export default function Home() {
+  const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<ActiveTab>("generate");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
@@ -78,13 +80,24 @@ export default function Home() {
       <header className="sticky top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-14">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center glow-orange-sm">
-                <Zap className="w-4 h-4 text-white" />
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setLocation("/")}
+                data-testid="back-to-home"
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Home</span>
+              </button>
+              <div className="w-px h-4 bg-border/50" />
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center glow-orange-sm">
+                  <Zap className="w-4 h-4 text-white" />
+                </div>
+                <span className="font-bold text-foreground tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                  AdPilot <span className="text-gradient-orange">AI</span>
+                </span>
               </div>
-              <span className="font-bold text-foreground tracking-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                AdPilot <span className="text-gradient-orange">AI</span>
-              </span>
             </div>
             <div className="flex items-center gap-1">
               <button
