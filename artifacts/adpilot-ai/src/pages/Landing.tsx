@@ -27,35 +27,35 @@ const features = [
   {
     icon: <BarChart2 className="w-5 h-5" />,
     title: "Know Which Platforms to Use",
-    text: "See whether your business should focus on Facebook, TikTok, Google, Instagram — or a combination.",
+    text: "See whether to focus on Facebook, TikTok, Google Ads, Instagram, or a mix of them. Based on your actual business, not guesswork.",
     color: "from-blue-500/20 to-blue-500/5 border-blue-500/20",
     iconColor: "text-blue-400 bg-blue-400/10",
   },
   {
     icon: <MessageSquare className="w-5 h-5" />,
-    title: "Get Ready-to-Use Ad Copy",
-    text: "Get multiple ad copy angles tailored to your offer — headlines, body text, and a call to action.",
+    title: "Ad Copy Written for You",
+    text: "Multiple angles written for your offer. Headlines, body copy and a clear call to action, ready to use.",
     color: "from-green-500/20 to-green-500/5 border-green-500/20",
     iconColor: "text-green-400 bg-green-400/10",
   },
   {
     icon: <DollarSign className="w-5 h-5" />,
     title: "Spend Your Budget Wisely",
-    text: "Stop wasting money on the wrong channels. Get a clear budget split based on your goal.",
+    text: "Stop putting money into the wrong channels. See exactly where to spend it based on your goal.",
     color: "from-amber-500/20 to-amber-500/5 border-amber-500/20",
     iconColor: "text-amber-400 bg-amber-400/10",
   },
   {
     icon: <Map className="w-5 h-5" />,
-    title: "Get a Real Marketing Strategy",
-    text: "Not generic tips — a focused strategy matched to your specific business and goal.",
+    title: "A Real Marketing Strategy",
+    text: "Not generic tips. A strategy built around your business, your budget, and what you actually want to achieve.",
     color: "from-primary/20 to-primary/5 border-primary/20",
     iconColor: "text-primary bg-primary/10",
   },
   {
     icon: <Zap className="w-5 h-5" />,
     title: "Know What to Do Next",
-    text: "AdPilot AI breaks everything into weekly action steps so you always know what to work on.",
+    text: "Everything breaks down into weekly tasks so you always have a clear next step to take.",
     color: "from-rose-500/20 to-rose-500/5 border-rose-500/20",
     iconColor: "text-rose-400 bg-rose-400/10",
   },
@@ -65,17 +65,17 @@ const steps = [
   {
     number: "01",
     title: "Enter Your Business Details",
-    text: "Add your business name, product or service, a short description, your target location, budget, and main goal.",
+    text: "Add your business name, what you sell, your target location, your budget, and your main goal. Takes about two minutes.",
   },
   {
     number: "02",
     title: "Get Your Recommendations",
-    text: "AdPilot AI reviews your input and gives you tailored guidance on who to target, where to advertise, what to say, and how to split your budget.",
+    text: "AdPilot AI analyses your details and tells you who to target, where to advertise, what to say, and how to split your budget.",
   },
   {
     number: "03",
     title: "Follow the Plan",
-    text: "You'll get a practical week-by-week action plan you can start using straight away — no marketing experience required.",
+    text: "You get a week-by-week action plan you can start on right away. No marketing experience needed.",
   },
 ];
 
@@ -90,11 +90,11 @@ const builtFor = [
 
 const benefits = [
   { icon: <Shield className="w-4 h-4" />, text: "No marketing experience needed" },
-  { icon: <Sparkles className="w-4 h-4" />, text: "Simple to use from day one" },
-  { icon: <MessageSquare className="w-4 h-4" />, text: "Plain language — no confusing jargon" },
-  { icon: <Target className="w-4 h-4" />, text: "Market with clarity and confidence" },
-  { icon: <Clock className="w-4 h-4" />, text: "Cut hours of research down to minutes" },
-  { icon: <CheckCircle2 className="w-4 h-4" />, text: "Turn vague ideas into a clear plan" },
+  { icon: <Sparkles className="w-4 h-4" />, text: "Simple to use from the start" },
+  { icon: <MessageSquare className="w-4 h-4" />, text: "Written in plain language, no jargon" },
+  { icon: <Target className="w-4 h-4" />, text: "Know exactly who to reach and what to say" },
+  { icon: <Clock className="w-4 h-4" />, text: "Hours of research done in minutes" },
+  { icon: <CheckCircle2 className="w-4 h-4" />, text: "Turns a vague idea into a real plan" },
 ];
 
 function scrollTo(id: string) {
@@ -173,14 +173,14 @@ export default function Landing() {
             className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6"
             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
-            Better ads and smarter marketing —{" "}
+            Better ads and smarter marketing,{" "}
             <span className="text-gradient-orange">
               even without a marketing background
             </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Tell AdPilot AI about your business and what you want to achieve. It'll give you a clear plan — who to target, where to advertise, what to say, and how to use your budget well.
+            Tell AdPilot AI about your business and what you want to achieve. You'll get a clear plan covering who to target, where to advertise, what to say, and how to spend your budget.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -233,7 +233,7 @@ export default function Landing() {
             Marketing your business shouldn't be this hard
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Most small business owners know they need more visibility — they just don't know where to start. AdPilot AI turns your business details into a practical marketing plan you can actually follow, without needing to hire an agency or learn everything from scratch.
+            Most small business owners know they need more visibility. The hard part is knowing where to start. AdPilot AI takes your business details and turns them into a marketing plan you can actually follow, without hiring an agency or starting from zero.
           </p>
         </div>
       </section>
@@ -381,7 +381,7 @@ export default function Landing() {
                 Stop guessing. Start with a plan.
               </h2>
               <p className="text-base text-muted-foreground mb-8">
-                Let AdPilot AI build your marketing strategy in minutes.
+                Get your marketing plan in minutes, not days.
               </p>
               <Button
                 onClick={goToApp}
@@ -409,10 +409,10 @@ export default function Landing() {
             style={{ fontFamily: "'Space Grotesk', sans-serif" }}
           >
             Better ads. The right audience.{" "}
-            <span className="text-gradient-orange">Marketing that makes sense.</span>
+            <span className="text-gradient-orange">Marketing that actually makes sense.</span>
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground mb-10 leading-relaxed max-w-xl mx-auto">
-            AdPilot AI gives you the guidance you need to promote your business — step by step, without the overwhelm.
+            AdPilot AI gives you a clear path to promoting your business, step by step, without the guesswork.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
