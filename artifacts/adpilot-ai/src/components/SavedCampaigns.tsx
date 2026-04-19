@@ -9,6 +9,7 @@ interface SavedCampaignsProps {
   campaigns: CampaignRecommendation[];
   onSelect: (campaign: CampaignRecommendation) => void;
   onDelete: (id: string) => void;
+  userId?: string | null;
 }
 
 const goalColors: Record<string, string> = {
@@ -25,18 +26,18 @@ const goalLabels: Record<string, string> = {
   growth: "Accelerate Growth",
 };
 
-export function SavedCampaigns({ campaigns, onSelect, onDelete }: SavedCampaignsProps) {
+export function SavedCampaigns({ campaigns, onSelect, onDelete, userId }: SavedCampaignsProps) {
   const { toast } = useToast();
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   function handleDelete(e: React.MouseEvent, id: string) {
     e.stopPropagation();
     setDeletingId(id);
-    deleteCampaign(id);
+    deleteCampaign(id, userId);
     onDelete(id);
     toast({
-      title: "Campaign deleted",
-      description: "Campaign has been removed from your saved list",
+      title: "Campaign removed",
+      description: "Removed from your saved campaigns",
     });
     setTimeout(() => setDeletingId(null), 300);
   }
@@ -44,19 +45,19 @@ export function SavedCampaigns({ campaigns, onSelect, onDelete }: SavedCampaigns
   if (campaigns.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-        <div className="w-16 h-16 rounded-2xl bg-muted/40 border border-border/40 flex items-center justify-center mb-4">
-          <Target className="w-7 h-7 text-muted-foreground/50" />
+        <div className="w-14 h-14 rounded-2xl bg-muted/40 border border-border/40 flex items-center justify-center mb-4">
+          <Target className="w-6 h-6 text-muted-foreground/50" />
         </div>
-        <h3 className="text-base font-semibold text-foreground/70 mb-1">No saved campaigns yet</h3>
-        <p className="text-sm text-muted-foreground max-w-xs">
-          Generate recommendations and save campaigns you want to reference later
+        <h3 className="text-sm font-semibold text-foreground/70 mb-1">No saved campaigns yet</h3>
+        <p className="text-xs text-muted-foreground max-w-xs">
+          Generate a campaign and save it — it'll appear here for easy access later
         </p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 p-3">
       {campaigns.map((campaign) => {
         const goalColor = goalColors[campaign.input.goal] || goalColors.awareness;
         const goalLabel = goalLabels[campaign.input.goal] || campaign.input.goal;
@@ -65,30 +66,27 @@ export function SavedCampaigns({ campaigns, onSelect, onDelete }: SavedCampaigns
           day: "numeric",
           year: "numeric",
         });
+        const currencySymbol = campaign.input.currency?.symbol ?? "$";
 
         return (
           <div
             key={campaign.id}
             data-testid={`saved-campaign-${campaign.id}`}
             onClick={() => onSelect(campaign)}
-            className={`group relative flex items-start gap-4 p-4 rounded-xl border cursor-pointer transition-all duration-200
-              border-border/50 bg-card hover:border-primary/30 hover:bg-muted/20 hover:shadow-lg hover:shadow-primary/5
+            className={`group relative flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-all duration-200
+              border-border/50 bg-background/40 hover:border-primary/30 hover:bg-muted/20
               ${deletingId === campaign.id ? "opacity-50 scale-98" : ""}`}
           >
-            {/* Left: Icon */}
-            <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-muted/50 border border-border/40 flex items-center justify-center">
-              <span className="text-lg font-bold text-foreground/50">
+            <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-muted/50 border border-border/40 flex items-center justify-center">
+              <span className="text-base font-bold text-foreground/50">
                 {campaign.input.businessName.charAt(0).toUpperCase()}
               </span>
             </div>
 
-            {/* Center: Info */}
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
-                  <h4 className="text-sm font-semibold text-foreground truncate">
-                    {campaign.input.businessName}
-                  </h4>
+                  <h4 className="text-sm font-semibold text-foreground truncate">{campaign.input.businessName}</h4>
                   <p className="text-xs text-muted-foreground truncate">{campaign.input.product}</p>
                 </div>
                 <span className={`flex-shrink-0 text-xs font-medium px-2 py-0.5 rounded-full border ${goalColor}`}>
@@ -96,14 +94,14 @@ export function SavedCampaigns({ campaigns, onSelect, onDelete }: SavedCampaigns
                 </span>
               </div>
 
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5">
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
                   <MapPin className="w-3 h-3" />
                   <span>{campaign.input.location}</span>
                 </div>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
                   <DollarSign className="w-3 h-3" />
-                  <span>{campaign.input.budget}/mo</span>
+                  <span>{currencySymbol}{campaign.input.budget}/mo</span>
                 </div>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
                   <Calendar className="w-3 h-3" />
@@ -112,7 +110,6 @@ export function SavedCampaigns({ campaigns, onSelect, onDelete }: SavedCampaigns
               </div>
             </div>
 
-            {/* Right: Actions */}
             <div className="flex-shrink-0 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <Button
                 variant="ghost"

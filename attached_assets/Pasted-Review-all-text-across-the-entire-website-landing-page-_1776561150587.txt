@@ -1,0 +1,64 @@
+Review all text across the entire website (landing page and dashboard).
+
+Tasks:
+1. Fix all punctuation and grammar errors.
+2. Rewrite sentences to sound natural, simple, and human — not robotic or overly formal.
+3. Avoid repetitive phrases and overly generic AI wording.
+4. Keep the meaning the same, but improve clarity and flow.
+5. Make the tone sound like a real startup product speaking to small business owners.
+6. Keep sentences short and easy to understand.
+7. Do not change the structure or layout of the page.
+
+Focus especially on:
+- Headlines
+- Subheadlines
+- Feature descriptions
+- Call-to-action text
+
+Make sure everything reads smoothly and professionally.
+
+Make the tone slightly more conversational and confident.
+
+Avoid:
+- Overly generic phrases
+- Buzzwords
+- Repetitive sentence structures
+
+Make it sound like a real person explaining the product clearly and confidently.
+Add authentication improvements and budget currency improvements to the existing AdPilot AI app.
+
+Authentication:
+1. Add user login and sign up functionality.
+2. Allow users to continue with Google.
+3. Allow users to continue with Apple.
+4. Keep the authentication flow clean, modern, and simple.
+5. After login, each user should have their own saved campaigns and personal dashboard data.
+
+Currency and budget improvements:
+1. Update the budget input in the dashboard so it is not fixed to dollars only.
+2. Add a currency selector beside or inside the budget field.
+3. Include common currencies such as:
+   - USD
+   - GBP
+   - EUR
+   - NGN
+   - CAD
+   - AUD
+4. Try to set a default currency automatically based on the user’s location, profile, or available login/account details.
+5. If automatic currency detection is not reliable, fall back to a manual currency selector.
+6. Show the selected currency symbol clearly throughout the dashboard and recommendations.
+7. Make sure all budget advice and AI-generated output use the selected currency consistently.
+
+UI and UX requirements:
+1. Keep the existing dark theme with orange accents.
+2. Make the login page and auth buttons match the AdPilot AI style.
+3. Keep the dashboard clean and professional.
+4. Do not break the current landing page or existing dashboard layout.
+
+Technical requirements:
+1. Structure the authentication system so it can scale properly.
+2. Store each user’s selected currency preference in their profile or settings.
+3. Make sure saved campaigns remain tied to the logged-in user.
+4. Keep the code modular and easy to extend later.
+
+Please implement this carefully and make the experience feel production-ready.

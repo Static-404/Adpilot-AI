@@ -12,6 +12,8 @@ import {
   ChevronUp,
   CheckCircle2,
   TrendingUp,
+  Copy,
+  Check,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ResultCard } from "@/components/ResultCard";
@@ -21,28 +23,23 @@ import { useToast } from "@/hooks/use-toast";
 
 interface ResultsPanelProps {
   campaign: CampaignRecommendation;
+  userId?: string | null;
 }
 
-export function ResultsPanel({ campaign }: ResultsPanelProps) {
-  const [saved, setSaved] = useState(isCampaignSaved(campaign.id));
+export function ResultsPanel({ campaign, userId }: ResultsPanelProps) {
+  const [saved, setSaved] = useState(isCampaignSaved(campaign.id, userId));
   const [expandedStep, setExpandedStep] = useState<number | null>(0);
   const { toast } = useToast();
 
   function handleSave() {
     if (saved) {
-      deleteCampaign(campaign.id);
+      deleteCampaign(campaign.id, userId);
       setSaved(false);
-      toast({
-        title: "Campaign removed",
-        description: "Removed from saved campaigns",
-      });
+      toast({ title: "Campaign removed", description: "Removed from saved campaigns" });
     } else {
-      saveCampaign(campaign);
+      saveCampaign(campaign, userId);
       setSaved(true);
-      toast({
-        title: "Campaign saved",
-        description: "Added to your saved campaigns",
-      });
+      toast({ title: "Campaign saved", description: "Added to your saved campaigns" });
     }
   }
 
@@ -57,7 +54,7 @@ Demographic: ${campaign.audience.demographic}
 Age Range: ${campaign.audience.ageRange}
 Income: ${campaign.audience.income}
 Interests: ${campaign.audience.interests.join(", ")}
-Behaviors: ${campaign.audience.behaviors.join(", ")}
+Behaviours: ${campaign.audience.behaviors.join(", ")}
 
 RECOMMENDED PLATFORMS
 ${campaign.platforms.map((p) => `• ${p.name} (${p.budgetShare}% budget) — ${p.reason}`).join("\n")}
@@ -67,7 +64,7 @@ ${campaign.adCopies.map((c, i) => `Variation ${i + 1} (${c.tone})\nHeadline: ${c
 
 BUDGET GUIDANCE
 Monthly Budget: ${campaign.budgetGuidance.monthly}
-Estimated ROI: ${campaign.budgetGuidance.roiEstimate}
+Estimated Return: ${campaign.budgetGuidance.roiEstimate}
 Breakdown:
 ${campaign.budgetGuidance.breakdown.map((b) => `• ${b.platform}: ${b.amount} (${b.percentage}%)`).join("\n")}
 
@@ -79,22 +76,20 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
 `.trim();
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-xs font-medium text-primary uppercase tracking-wider">
-              AI Recommendations Ready
+              Recommendations Ready
             </span>
           </div>
-          <h2 className="text-xl font-bold text-foreground">
-            {campaign.input.businessName}
-          </h2>
+          <h2 className="text-xl font-bold text-foreground">{campaign.input.businessName}</h2>
           <p className="text-sm text-muted-foreground mt-0.5">
             {campaign.input.product} &middot;{" "}
-            <span className="capitalize">{campaign.input.goal}</span> Campaign &middot;{" "}
+            <span className="capitalize">{campaign.input.goal}</span> &middot;{" "}
             {campaign.input.location}
           </p>
         </div>
@@ -123,15 +118,9 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
             }`}
           >
             {saved ? (
-              <>
-                <BookmarkCheck className="w-3.5 h-3.5 mr-1.5" />
-                Saved
-              </>
+              <><BookmarkCheck className="w-3.5 h-3.5 mr-1.5" />Saved</>
             ) : (
-              <>
-                <Bookmark className="w-3.5 h-3.5 mr-1.5" />
-                Save Campaign
-              </>
+              <><Bookmark className="w-3.5 h-3.5 mr-1.5" />Save</>
             )}
           </Button>
         </div>
@@ -145,11 +134,11 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
           data-testid="card-audience"
           icon={<Users className="w-4 h-4" />}
           accentColor="from-violet-400/40 to-transparent"
-          copyContent={`Target Audience\n\nDemographic: ${campaign.audience.demographic}\nAge: ${campaign.audience.ageRange}\nIncome: ${campaign.audience.income}\nInterests: ${campaign.audience.interests.join(", ")}\nBehaviors: ${campaign.audience.behaviors.join(", ")}`}
+          copyContent={`Target Audience\n\nDemographic: ${campaign.audience.demographic}\nAge: ${campaign.audience.ageRange}\nIncome: ${campaign.audience.income}\nInterests: ${campaign.audience.interests.join(", ")}\nBehaviours: ${campaign.audience.behaviors.join(", ")}`}
         >
           <div className="space-y-3">
             <div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Demographic</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Who they are</div>
               <p className="text-sm text-foreground leading-relaxed">{campaign.audience.demographic}</p>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -166,24 +155,18 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
               <div className="text-xs text-muted-foreground uppercase tracking-wide mb-1.5">Interests</div>
               <div className="flex flex-wrap gap-1.5">
                 {campaign.audience.interests.map((interest) => (
-                  <span
-                    key={interest}
-                    className="text-xs px-2 py-1 rounded-md bg-violet-500/10 text-violet-300 border border-violet-500/20"
-                  >
+                  <span key={interest} className="text-xs px-2 py-1 rounded-md bg-violet-500/10 text-violet-300 border border-violet-500/20">
                     {interest}
                   </span>
                 ))}
               </div>
             </div>
             <div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wide mb-1.5">Behaviors</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide mb-1.5">Behaviours</div>
               <div className="flex flex-wrap gap-1.5">
-                {campaign.audience.behaviors.map((behavior) => (
-                  <span
-                    key={behavior}
-                    className="text-xs px-2 py-1 rounded-md bg-muted/60 text-muted-foreground border border-border/40"
-                  >
-                    {behavior}
+                {campaign.audience.behaviors.map((b) => (
+                  <span key={b} className="text-xs px-2 py-1 rounded-md bg-muted/60 text-muted-foreground border border-border/40">
+                    {b}
                   </span>
                 ))}
               </div>
@@ -200,7 +183,7 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
           copyContent={campaign.platforms.map((p) => `${p.name} (${p.budgetShare}%): ${p.reason}`).join("\n\n")}
         >
           <div className="space-y-3">
-            {campaign.platforms.map((platform, i) => (
+            {campaign.platforms.map((platform) => (
               <div key={platform.name} className="flex gap-3 items-start">
                 <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs">
                   {platform.icon}
@@ -213,12 +196,9 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{platform.reason}</p>
-                  <div className="flex gap-3 mt-1.5">
-                    <span className="text-xs text-muted-foreground/70">
-                      Reach: <span className="text-foreground/70">{platform.estimatedReach}</span>
-                    </span>
+                  <div className="text-xs text-muted-foreground/70 mt-1">
+                    Est. reach: <span className="text-foreground/70">{platform.estimatedReach}</span>
                   </div>
-                  {/* Budget bar */}
                   <div className="mt-1.5 h-1 rounded-full bg-muted/60 overflow-hidden">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-primary to-primary/60 transition-all duration-700"
@@ -233,7 +213,7 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
 
         {/* Ad Copy */}
         <ResultCard
-          title="Ad Copy Suggestions"
+          title="Ad Copy Ideas"
           data-testid="card-adcopy"
           icon={<MessageSquare className="w-4 h-4" />}
           accentColor="from-green-400/40 to-transparent"
@@ -252,7 +232,7 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
           data-testid="card-budget"
           icon={<DollarSign className="w-4 h-4" />}
           accentColor="from-amber-400/40 to-transparent"
-          copyContent={`Monthly Budget: ${campaign.budgetGuidance.monthly}\nEstimated ROI: ${campaign.budgetGuidance.roiEstimate}\n\nBreakdown:\n${campaign.budgetGuidance.breakdown.map((b) => `• ${b.platform}: ${b.amount} (${b.percentage}%)`).join("\n")}\n\nTips:\n${campaign.budgetGuidance.tips.map((t) => `• ${t}`).join("\n")}`}
+          copyContent={`Monthly Budget: ${campaign.budgetGuidance.monthly}\nEst. Return: ${campaign.budgetGuidance.roiEstimate}\n\nBreakdown:\n${campaign.budgetGuidance.breakdown.map((b) => `• ${b.platform}: ${b.amount} (${b.percentage}%)`).join("\n")}\n\nTips:\n${campaign.budgetGuidance.tips.map((t) => `• ${t}`).join("\n")}`}
         >
           <div className="space-y-3">
             <div className="flex items-center gap-3 bg-primary/10 border border-primary/20 rounded-xl p-3">
@@ -263,26 +243,23 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
               </div>
             </div>
             <div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Budget Breakdown</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide mb-2">How to split your budget</div>
               <div className="space-y-2">
                 {campaign.budgetGuidance.breakdown.map((item) => (
                   <div key={item.platform} className="flex items-center justify-between">
                     <span className="text-sm text-foreground/80 truncate mr-2">{item.platform}</span>
                     <div className="flex items-center gap-2 flex-shrink-0">
-                      <div className="w-16 h-1.5 rounded-full bg-muted/60 overflow-hidden">
-                        <div
-                          className="h-full rounded-full bg-primary/70"
-                          style={{ width: `${item.percentage}%` }}
-                        />
+                      <div className="w-14 h-1.5 rounded-full bg-muted/60 overflow-hidden">
+                        <div className="h-full rounded-full bg-primary/70" style={{ width: `${item.percentage}%` }} />
                       </div>
-                      <span className="text-xs font-medium text-primary w-12 text-right">{item.amount}</span>
+                      <span className="text-xs font-medium text-primary w-14 text-right">{item.amount}</span>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
             <div>
-              <div className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Pro Tips</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Tips</div>
               <div className="space-y-1.5">
                 {campaign.budgetGuidance.tips.map((tip, i) => (
                   <div key={i} className="flex gap-2 text-xs text-muted-foreground">
@@ -296,9 +273,9 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
         </ResultCard>
       </div>
 
-      {/* Strategy Summary — Full width */}
+      {/* Strategy Summary */}
       <ResultCard
-        title="Marketing Strategy Summary"
+        title="Strategy Summary"
         data-testid="card-strategy"
         icon={<Map className="w-4 h-4" />}
         accentColor="from-primary/60 via-primary/20 to-transparent"
@@ -315,7 +292,7 @@ ${campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) 
         accentColor="from-orange-400/50 to-transparent"
         copyContent={campaign.actionPlan.map((s) => `Week ${s.week}: ${s.title}\n${s.tasks.map((t) => `• ${t}`).join("\n")}`).join("\n\n")}
       >
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {campaign.actionPlan.map((step, i) => (
             <div key={step.week} className="border border-border/40 rounded-xl overflow-hidden">
               <button
@@ -388,7 +365,7 @@ function AdCopyVariant({ copy, index }: AdCopyVariantProps) {
           data-testid={`copy-adcopy-${index}`}
           className="opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-foreground p-1 rounded"
         >
-          {copied ? <CheckCircle2 className="w-3.5 h-3.5 text-green-400" /> : <Users className="w-3.5 h-3.5" />}
+          {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
         </button>
       </div>
       <p className="text-sm font-semibold text-foreground mb-1">{copy.headline}</p>
